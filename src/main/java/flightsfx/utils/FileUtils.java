@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,11 +29,12 @@ public class FileUtils {
 
         return null;
     }
-    public static void saveFlights(List<Flight> flightList){
-        try(PrintWriter pw = new PrintWriter("flights.txt"))
-        {
+
+    public static void saveFlights(List<Flight> flightList) {
+        try (PrintWriter pw = new PrintWriter("flights.txt")) {
             flightList.stream()
                     .forEach(f -> pw.println(f.toString()));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 }

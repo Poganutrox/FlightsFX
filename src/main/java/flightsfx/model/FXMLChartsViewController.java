@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import static flightsfx.utils.MessageUtils.showError;
+
 public class FXMLChartsViewController implements Initializable {
     @FXML
     private PieChart chart;
@@ -26,9 +28,9 @@ public class FXMLChartsViewController implements Initializable {
         //Getting the main controller in order to get the flight list
         FXMLLoader loader = new FXMLLoader(FlightsFX.class.getResource("FXMLMainView.fxml"));
         try {
-            Parent root = (Parent)loader.load();
+            Parent root = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showError(e.getMessage());
         }
         FXMLMainViewController controller = (FXMLMainViewController)loader.getController();
         List<Flight> flights = controller.getFlightList();
@@ -38,7 +40,7 @@ public class FXMLChartsViewController implements Initializable {
         Map<String, Long> result;
         result = flights.stream()
                 .collect(Collectors.groupingBy(
-                        f -> f.destination,
+                        f -> f.getDestination(),
                         Collectors.counting()));
 
         result.forEach((destination, sum) -> {

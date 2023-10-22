@@ -5,10 +5,13 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Flight {
-    String flightNumber; //such as "IB601N"
-    String destination; //a city name
-    LocalDateTime departureTime; //The departure time and date
-    LocalTime flightDuration; //The flight duration, in hours and minutes
+    private String flightNumber; //such as "IB601N"
+    private String destination; //a city name
+    private LocalDateTime departureTime; //The departure time and date
+    private LocalTime flightDuration; //The flight duration, in hours and minutes
+
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
 
     public Flight(String flightNumber) {
         this.flightNumber = flightNumber;
@@ -40,6 +43,9 @@ public class Flight {
     public LocalDateTime getDepartureTime() {
         return departureTime;
     }
+    public String getFormattedDepartureTime() {
+        return departureTime.format(dateFormatter);
+    }
 
     public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
@@ -48,6 +54,9 @@ public class Flight {
     public LocalTime getFlightDuration() {
         return flightDuration;
     }
+    public String getFormattedFlightDuration() {
+        return flightDuration.format(timeFormatter);
+    }
 
     public void setFlightDuration(LocalTime flightDuration) {
         this.flightDuration = flightDuration;
@@ -55,9 +64,6 @@ public class Flight {
 
     @Override
     public String toString() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
-
-        return flightNumber+";"+destination+";"+departureTime.format(dateFormatter)+";"+flightDuration.format(timeFormatter);
+        return flightNumber + ";" + destination + ";" + getFormattedDepartureTime() + ";" + getFormattedFlightDuration();
     }
 }

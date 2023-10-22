@@ -13,7 +13,7 @@ public class SceneLoader {
     {
         Parent root = FXMLLoader.load(
                 FlightsFX.class.getResource(viewPath));
-        Scene viewScene = new Scene(root);
+        Scene viewScene = new Scene(root,900, 600);
         stage.setScene(viewScene);
         stage.show();
     }

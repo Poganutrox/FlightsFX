@@ -1,6 +1,5 @@
 package flightsfx.model;
 
-import flightsfx.utils.FileUtils;
 import flightsfx.utils.SceneLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,6 +18,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 
 import static flightsfx.utils.FileUtils.loadFlights;
 import static flightsfx.utils.FileUtils.saveFlights;
+import static flightsfx.utils.MessageUtils.showError;
+import static flightsfx.utils.MessageUtils.showMessage;
 
 public class FXMLMainViewController implements Initializable {
     @FXML
@@ -34,15 +36,11 @@ public class FXMLMainViewController implements Initializable {
     @FXML
     private TextField tfDestination;
     @FXML
-    private Button btnAdd;
-    @FXML
     private TextField tfDeparture;
     @FXML
     private TextField tfDuration;
     @FXML
     private Button btnDelete;
-    @FXML
-    private Button btnApply;
     @FXML
     private TextField tfSearchFlight;
     @FXML
@@ -58,6 +56,8 @@ public class FXMLMainViewController implements Initializable {
     @FXML
     private ComboBox cbFilter;
     private ObservableList<Flight> flights = null;
+    static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -69,10 +69,14 @@ public class FXMLMainViewController implements Initializable {
 
         colFlightNumber.setCellValueFactory(new PropertyValueFactory("FlightNumber"));
         colDestination.setCellValueFactory(new PropertyValueFactory("Destination"));
-        colDeparture.setCellValueFactory(new PropertyValueFactory("DepartureTime"));
-        colDuration.setCellValueFactory(new PropertyValueFactory("FlightDuration"));
+        colDeparture.setCellValueFactory(new PropertyValueFactory("FormattedDepartureTime"));
+        colDuration.setCellValueFactory(new PropertyValueFactory("FormattedFlightDuration"));
 
         tvFlights.setItems(flights);
+
+        //Setting the message shown in the table view when no flights detected
+        Label emptyContentMessage = new Label("No flights to show");
+        tvFlights.setPlaceholder(emptyContentMessage);
 
         //Setting the different items in the combo box
         cbFilter.getItems().addAll(
@@ -83,46 +87,60 @@ public class FXMLMainViewController implements Initializable {
                 "Show flight duration average"
         );
 
-        tfSearchFlight.textProperty().addListener(new ChangeListener<String>() {
+        //Listener that activates the delete button when clicking on the table view
+        tvFlights.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>(){
+            @Override
+            public void changed(ObservableValue<? extends Flight> observableValue, Flight flight, Flight t1) {
+                btnDelete.setDisable(false);
+            }
+        });
+
+        //Listener that detects when the user writes in the search field
+        tfSearchFlight.textProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 onTypeSearch(newValue);
             }
         });
     }
-    public void onClickAdd(ActionEvent actionEvent) {
-        if (tfFlightNumber.getText().equals("") ||
-                tfDestination.getText().equals("")||
-                tfDeparture.getText().equals("")||
-                tfDuration.getText().equals(""))
-        {
-            Alert dialog = new Alert(Alert.AlertType.ERROR);
-            dialog.setTitle("Error");
-            dialog.setHeaderText("Error adding data");
-            dialog.setContentText("No field can be empty");
-            dialog.showAndWait();
-        } else {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
 
-            flights.add(new Flight(tfFlightNumber.getText(),
-                    tfDestination.getText(),
-                    LocalDateTime.parse(tfDeparture.getText(), dateFormatter),
-                    LocalTime.parse(tfDuration.getText(), timeFormatter)));
+    public void onClickAdd() {
+        try {
+            if (tfFlightNumber.getText().equals("") ||
+                    tfDestination.getText().equals("") ||
+                    tfDeparture.getText().equals("") ||
+                    tfDuration.getText().equals("")) {
+                showError("No field can be empty");
+            } else {
+                flights.add(new Flight(tfFlightNumber.getText(),
+                        tfDestination.getText(),
+                        LocalDateTime.parse(tfDeparture.getText(), dateFormatter),
+                        LocalTime.parse(tfDuration.getText(), timeFormatter)));
 
-            saveFlights(flights);
-            tvFlights.setItems(flights);
+                tvFlights.setItems(flights);
+
+                showMessage("Flight successfully added!");
+            }
+        }
+        catch(DateTimeParseException dt){
+            showError("Incorrect date or time format");
+        }
+        catch(Exception e){
+            showError(e.getMessage());
         }
     }
 
-    public void onClickDelete(ActionEvent actionEvent) {
-        int selectRowIndex = tvFlights.getSelectionModel().selectedIndexProperty().get();
-        flights.remove(selectRowIndex);
-        saveFlights(flights);
+    public void onClickDelete() {
+        Flight selectFlight = tvFlights.getSelectionModel().selectedItemProperty().get();
+        for(int i=0;i<flights.size();i++){
+            if(flights.get(i).equals(selectFlight)){
+                flights.remove(i);
+            }
+        }
         tvFlights.setItems(flights);
     }
 
-    public void onClickApplyFilter(ActionEvent actionEvent) {
+    public void onClickApplyFilter() {
         int selectedItem = cbFilter.getSelectionModel().selectedIndexProperty().get();
         switch(selectedItem){
             case 0:
@@ -132,20 +150,14 @@ public class FXMLMainViewController implements Initializable {
                 Flight selectedFlight = tvFlights.getSelectionModel().getSelectedItem();
 
                 if (selectedFlight == null) {
-                    Alert dialog = new Alert(Alert.AlertType.ERROR);
-                    dialog.setTitle("Error");
-                    dialog.setHeaderText("No flight selected");
-                    dialog.showAndWait();
+                    showError("No flight selected");
                 } else {
                     List<Flight> flightList = flights.stream()
                             .filter(p -> p.getDestination().equals(selectedFlight.getDestination()))
                             .collect(Collectors.toList());
 
                     if (flightList.isEmpty()) {
-                        Alert dialog = new Alert(Alert.AlertType.ERROR);
-                        dialog.setTitle("Error");
-                        dialog.setHeaderText("No flights to the selected city");
-                        dialog.showAndWait();
+                        showError("No flights heading to the selected city");
                     } else {
                         tvFlights.setItems(FXCollections.observableArrayList(flightList));
                     }
@@ -153,13 +165,13 @@ public class FXMLMainViewController implements Initializable {
                 break;
             case 2:
                 tvFlights.setItems(FXCollections.observableArrayList(flights.stream()
-                        .filter(p -> p.flightDuration.getHour() > 3)
+                        .filter(p -> p.getFlightDuration().getHour() > 3)
                         .collect(Collectors.toList())));
                 break;
             case 3:
                 LocalDateTime currentDay = LocalDateTime.now();
                 tvFlights.setItems(FXCollections.observableArrayList(flights.stream()
-                        .filter(p -> p.departureTime.isAfter(currentDay))
+                        .filter(p -> p.getDepartureTime().isAfter(currentDay))
                         .sorted(Comparator.comparing(Flight :: getDepartureTime).reversed())
                         .limit(5)
                         .collect(Collectors.toList())));
@@ -167,32 +179,27 @@ public class FXMLMainViewController implements Initializable {
             case 4:
                 OptionalDouble durationAvg = flights.stream()
                         .mapToInt(p -> {
-                            int hours = p.flightDuration.getHour();
-                            int min = p.flightDuration.getMinute();
+                            int hours = p.getFlightDuration().getHour();
+                            int min = p.getFlightDuration().getMinute();
                             return hours * 60 + min;
                         })
                         .average();
 
                 long averageMinutes = (long) durationAvg.getAsDouble();
                 LocalTime averageLocalTime = LocalTime.of((int)(averageMinutes / 60), (int)(averageMinutes % 60));
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
-
-                Alert dialog = new Alert(Alert.AlertType.INFORMATION);
-                dialog.setTitle("Flight duration average");
-                dialog.setHeaderText(averageLocalTime.format(timeFormatter));
-                dialog.showAndWait();
+                showMessage(averageLocalTime.format(timeFormatter));
                 break;
         }
-
     }
 
     public void onTypeSearch(String searchFlight) {
+        String searchFlightLower = searchFlight.toLowerCase();
         tvFlights.setItems(FXCollections.observableArrayList(flights.stream()
                 .filter(p ->
-                    p.flightDuration.toString().contains(searchFlight) ||
-                    p.destination.contains(searchFlight) ||
-                    p.flightNumber.toString().contains(searchFlight)||
-                    p.departureTime.toString().contains(searchFlight))
+                    p.getFlightDuration().toString().toLowerCase().contains(searchFlightLower) ||
+                    p.getDestination().toLowerCase().contains(searchFlightLower) ||
+                    p.getFlightNumber().toLowerCase().contains(searchFlightLower)||
+                    p.getDepartureTime().toString().toLowerCase().contains(searchFlightLower))
                 .collect(Collectors.toList())));
     }
 
@@ -202,5 +209,13 @@ public class FXMLMainViewController implements Initializable {
     }
     public List<Flight> getFlightList(){
         return flights;
+    }
+
+    public void setOnCloseListener(Stage stage)
+    {
+        stage.setOnCloseRequest(e ->
+        {
+            saveFlights(flights);
+        });
     }
 }

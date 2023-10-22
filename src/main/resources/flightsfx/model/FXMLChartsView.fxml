@@ -12,7 +12,11 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <Button layoutX="274.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickBackToMainView" text="&lt; Back" />
+            <HBox alignment="CENTER" layoutX="274.0" layoutY="9.0" prefHeight="42.4" prefWidth="599.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onClickBackToMainView" text="&lt; Back" />
+               </children>
+            </HBox>
          </children></AnchorPane>
   </items>
 </SplitPane>

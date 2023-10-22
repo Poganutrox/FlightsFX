@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74f1dee1-06c4-4b4a-bc0e-e85a59743d80" name="Changes" comment="" />
+    <list default="true" id="74f1dee1-06c4-4b4a-bc0e-e85a59743d80" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flights.txt" beforeDir="false" afterPath="$PROJECT_DIR$/flights.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLChartsViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLChartsViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLMainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLMainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/Flight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/FlightsFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/FlightsFX.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/utils/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/utils/MessageUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/utils/MessageUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/utils/SceneLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/utils/SceneLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/flightsfx/model/FXMLChartsView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/flightsfx/model/FXMLChartsView.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +30,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="2WnBIFMujhEH3ezbI0oOp8fcVDB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -60,8 +76,19 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FlightsFX$FlightsFX.ic" NAME="FlightsFX Coverage Results" MODIFIED="1697389871157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/FlightsFX$FlightsFX.ic" NAME="FlightsFX Coverage Results" MODIFIED="1697982987085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>flightsfx.model.*</FILTER>
     </SUITE>
   </component>
