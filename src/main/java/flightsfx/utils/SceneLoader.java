@@ -8,13 +8,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SceneLoader {
-    public static void loadScreen(String viewPath, Stage stage)
+    public static void loadScreen(String viewPath, Stage stage, Scene scene)
             throws IOException
     {
         Parent root = FXMLLoader.load(
                 FlightsFX.class.getResource(viewPath));
-        Scene viewScene = new Scene(root,900, 600);
-        stage.setScene(viewScene);
+        scene.setRoot(root);
+        stage.setScene(scene);
         stage.show();
     }
 }

@@ -1,0 +1,26 @@
+.root
+{
+    -fx-background-color: #BAF3F5;
+    -fx-color: #BAE0F5;
+}
+
+.button
+{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+.table-view {
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+.table-row-cell:selected {
+    -fx-background-color: #BABBF5;
+    -fx-text-fill: black;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}

@@ -18,6 +18,7 @@ public class FlightsFX extends Application {
         controller.setOnCloseListener(stage);
 
         Scene scene = new Scene(root, 900, 600);
+        scene.getStylesheets().add("AlternativeStyle.css");
         stage.setTitle("Flight control");
         stage.setScene(scene);
         stage.show();

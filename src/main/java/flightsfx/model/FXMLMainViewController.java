@@ -120,6 +120,12 @@ public class FXMLMainViewController implements Initializable {
                 tvFlights.setItems(flights);
 
                 showMessage("Flight successfully added!");
+
+                //Clean all the fields
+                tfFlightNumber.clear();
+                tfDestination.clear();
+                tfDeparture.clear();
+                tfDuration.clear();
             }
         }
         catch(DateTimeParseException dt){
@@ -172,7 +178,7 @@ public class FXMLMainViewController implements Initializable {
                 LocalDateTime currentDay = LocalDateTime.now();
                 tvFlights.setItems(FXCollections.observableArrayList(flights.stream()
                         .filter(p -> p.getDepartureTime().isAfter(currentDay))
-                        .sorted(Comparator.comparing(Flight :: getDepartureTime).reversed())
+                        .sorted(Comparator.comparing(Flight :: getDepartureTime))
                         .limit(5)
                         .collect(Collectors.toList())));
                 break;
@@ -205,7 +211,8 @@ public class FXMLMainViewController implements Initializable {
 
     public void onClickGoToCharts(ActionEvent actionEvent) throws IOException {
         SceneLoader.loadScreen("FXMLChartsView.fxml",
-                (Stage)((Node) actionEvent.getSource()).getScene().getWindow());
+                (Stage)((Node) actionEvent.getSource()).getScene().getWindow(),
+                ((Node) actionEvent.getSource()).getScene());
     }
     public List<Flight> getFlightList(){
         return flights;

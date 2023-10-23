@@ -32,7 +32,7 @@ public class FXMLChartsViewController implements Initializable {
         } catch (IOException e) {
             showError(e.getMessage());
         }
-        FXMLMainViewController controller = (FXMLMainViewController)loader.getController();
+        FXMLMainViewController controller = loader.getController();
         List<Flight> flights = controller.getFlightList();
 
         //Setting chart settings
@@ -49,6 +49,7 @@ public class FXMLChartsViewController implements Initializable {
     }
     public void onClickBackToMainView(ActionEvent actionEvent) throws IOException {
         SceneLoader.loadScreen("FXMLMainView.fxml",
-                (Stage)((Node) actionEvent.getSource()).getScene().getWindow());
+                (Stage)((Node) actionEvent.getSource()).getScene().getWindow(),
+                ((Node) actionEvent.getSource()).getScene());
     }
 }
