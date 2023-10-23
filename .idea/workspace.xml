@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74f1dee1-06c4-4b4a-bc0e-e85a59743d80" name="Changes" comment="Update project">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/AlternativeStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flights.txt" beforeDir="false" afterPath="$PROJECT_DIR$/flights.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLChartsViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLChartsViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLMainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/FXMLMainViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/Flight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/model/FlightsFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/model/FlightsFX.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/utils/FileUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/utils/MessageUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/utils/MessageUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/flightsfx/utils/SceneLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/flightsfx/utils/SceneLoader.java" afterDir="false" />
     </list>

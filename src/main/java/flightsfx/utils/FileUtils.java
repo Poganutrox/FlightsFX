@@ -11,7 +11,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The `FileUtils` class provides utility methods for loading and saving flight data to a file.
+ */
 public class FileUtils {
+
+    /**
+     * Loads flight data from a file named "flights.txt."
+     *
+     * @return A list of `Flight` objects loaded from the file.
+     */
     public static List<Flight> loadFlights() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm");
@@ -30,11 +39,17 @@ public class FileUtils {
         return null;
     }
 
+    /**
+     * Saves flight data to a file named "flights.txt."
+     *
+     * @param flightList The list of `Flight` objects to be saved to the file.
+     */
     public static void saveFlights(List<Flight> flightList) {
         try (PrintWriter pw = new PrintWriter("flights.txt")) {
             flightList.stream()
                     .forEach(f -> pw.println(f.toString()));
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
